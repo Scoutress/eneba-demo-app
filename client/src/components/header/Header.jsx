@@ -29,6 +29,12 @@ export default function Header() {
           </span>
         </button>
       </div>
+
+      <div>
+        <button>Wishlist</button>
+        <button>Cart</button>
+        <button>Profile</button>
+      </div>
     </header>
   );
 }
