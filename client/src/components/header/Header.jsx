@@ -14,6 +14,9 @@ export default function Header() {
           placeholder="Search for games, top-ups and more"
           aria-label="Search"
         />
+        <button type="button" aria-label="Search">
+          🔍
+        </button>
       </div>
 
       {/* Temp.section */}
