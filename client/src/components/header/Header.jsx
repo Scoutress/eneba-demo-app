@@ -19,12 +19,16 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Temp.section */}
-      <nav className={styles.nav}>
-        <a href="/">Home</a>
-        <a href="/about">About</a>
-        <a href="/contact">Contact</a>
-      </nav>
+      <div className={styles.region}>
+        <button className={styles.btn}>
+          <span className={styles.region_icon}>X </span>
+          <span className={styles.text}>
+            <span className={styles.language}>LT</span>
+            <span> |</span>
+            <span className={styles.currency}> EUR</span>
+          </span>
+        </button>
+      </div>
     </header>
   );
 }
