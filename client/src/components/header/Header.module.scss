@@ -14,8 +14,34 @@
   align-items: center;
 
   img {
-    height: 100px;
-    width: auto;
+    height: 80px;
+  }
+}
+
+.search {
+  display: flex;
+  justify-content: center;
+
+  input {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px 12px;
+
+    background-color: #8360c9;
+    border: 1px solid #95a3b6;
+    border-radius: 6px;
+
+    color: #fff;
+    font-size: 14px;
+
+    &::placeholder {
+      color: #94a3b8;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #38bdf8;
+    }
   }
 }
 

@@ -8,6 +8,14 @@ export default function Header() {
         <img src={logo} alt="App logo" />
       </a>
 
+      <div className={styles.search}>
+        <input
+          type="text"
+          placeholder="Search for games, top-ups and more"
+          aria-label="Search"
+        />
+      </div>
+
       {/* Temp.section */}
       <nav className={styles.nav}>
         <a href="/">Home</a>
