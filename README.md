@@ -1,1 +1,3 @@
-# eneba-demo-app
+# Demo project
+
+Description will be added later
