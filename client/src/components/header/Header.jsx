@@ -1,5 +1,5 @@
 import styles from "./Header.module.scss";
-import logo from "../../assets/logo.svg";
+import logo from "../../../../server/public/images/eneba_logo.svg";
 
 export default function Header() {
   return (

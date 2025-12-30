@@ -7,6 +7,7 @@ const HomePage = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const API_BASE = "http://localhost:3001";
 
   useEffect(() => {
     let alive = true;
@@ -50,7 +51,11 @@ const HomePage = () => {
         {items.map((item) => (
           <ShopItemCard
             key={item.id}
-            photo={item.photo}
+            photo={
+              item.photo?.startsWith("http")
+                ? item.photo
+                : `${API_BASE}${item.photo}`
+            }
             platformIcon={item.platformIcon}
             platform={item.platform}
             title={item.title}
