@@ -316,3 +316,29 @@ $platformH: 30px;
 
   border: 2px solid rgba(255, 255, 255, 0.85);
 }
+
+.sold {
+  position: relative;
+}
+
+.soldOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  z-index: 4;
+}
+
+.card:hover .panel {
+  transform: translateY(0);
+}
+
+.card.sold:hover .panel {
+  transform: translateY(115px);
+}
+
+.card.sold:hover .soldOverlay {
+  background: rgba(0, 0, 0, 0.45);
+}
