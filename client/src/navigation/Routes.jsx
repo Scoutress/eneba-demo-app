@@ -1,7 +1,7 @@
 const Routes = {
   listPage: {
-    link: "/list",
-    name: "List",
+    link: "/",
+    name: "HomePage",
   },
 };
 

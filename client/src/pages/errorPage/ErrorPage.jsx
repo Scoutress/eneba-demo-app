@@ -11,7 +11,7 @@ const ErrorPage = () => {
         It seems that the link you clicked may be broken or the page has been
         removed. Please check the URL or return to the homepage.
       </p>
-      <a href="/list" className={styles.homeLink}>
+      <a href="/" className={styles.homeLink}>
         Back to the main page
       </a>
     </div>
