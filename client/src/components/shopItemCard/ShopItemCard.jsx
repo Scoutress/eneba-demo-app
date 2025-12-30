@@ -2,48 +2,93 @@ import styles from "./ShopItemCard.module.scss";
 
 export default function ShopItemCard({
   photo,
+  platformIcon,
   platform,
   title,
-  region,
-  fullprice,
+  regionLabel,
+  regionOk,
+  // hasDiscount,
+  basePrice,
   discount,
-  price,
+  currentPrice,
+  priceInfo,
   cashback,
   wishlisted,
+  // available,
 }) {
   return (
-    <>
-      <div className={styles.card}>
-        {/* Wishlist */}
-        <button className={styles.wishlist}>♡</button>
+    <article className={styles.card}>
+      <div className={styles.media}>
+        <img className={styles.photo} src={photo} alt={title} />
 
-        {/* Image */}
-        <div className={styles.photo}>
-          <img src={photo} alt={title} />
+        <button
+          type="button"
+          className={styles.wishlistBtn}
+          aria-label="Add to wishlist"
+        >
+          ♡
+        </button>
+      </div>
+
+      <div className={styles.panel}>
+        <div className={styles.panelBg} />
+        <div className={styles.cashbackBadge}>
+          <span className={styles.badgeIcon}>↺</span>
+          <span>CASHBACK</span>
         </div>
 
-        {/* Content */}
-        <div className={styles.content}>
-          <div className={styles.platform}>{platform}</div>
-          <div className={styles.title}>{title}</div>
-          <div className={styles.region}>{region}</div>
+        <div className={styles.platformBar}>
+          <img className={styles.platformIcon} src={platformIcon} />
+          <span className={styles.platformText}>{platform}</span>
+        </div>
 
-          <div className={styles.old_prices}>
-            <span>From </span>
-            <span className={styles.fullprice}>{fullprice}</span>
+        <div className={styles.content}>
+          <h3 className={styles.title}>{title}</h3>
+
+          <div className={styles.regionRow}>
+            <span className={regionOk ? styles.regionOk : styles.regionBad}>
+              {regionLabel}
+            </span>
+          </div>
+
+          <div className={styles.baseRow}>
+            <span className={styles.from}>From</span>
+            <span className={styles.basePrice}>{basePrice}</span>
             <span className={styles.discount}>{discount}</span>
           </div>
 
-          <div className={styles.price}>{price}</div>
-          <div className={styles.cashback}>{cashback}</div>
-          <div className={styles.wishlisted}>{wishlisted}</div>
+          <div className={styles.currentRow}>
+            <span className={styles.currentPrice}>{currentPrice}</span>
+
+            <span className={styles.infoWrap}>
+              <span className={styles.infoIcon} aria-label="Price info">
+                ⓘ
+              </span>
+              {priceInfo ? (
+                <span className={styles.tooltip}>{priceInfo}</span>
+              ) : null}
+            </span>
+          </div>
+
+          <div className={styles.cashbackText}>
+            Cashback: <span className={styles.cashbackValue}>{cashback}</span>
+          </div>
+
+          <div className={styles.wishlistCount}>
+            <span className={styles.heart}>♡</span>
+            <span>{wishlisted}</span>
+          </div>
 
           <div className={styles.actions}>
-            <button className={styles.primary}>Add to cart</button>
-            <button className={styles.secondary}>Explore options</button>
+            <button type="button" className={styles.btnPrimary}>
+              Add to cart
+            </button>
+            <button type="button" className={styles.btnSecondary}>
+              Explore options
+            </button>
           </div>
         </div>
       </div>
-    </>
+    </article>
   );
 }

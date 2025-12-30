@@ -1,130 +1,318 @@
+$border: #12eeba;
+$lime: #12eeba;
+$muted: rgba(255, 255, 255, 0.75);
+$bg: #2a0a6a;
+$platformH: 30px;
+
 .card {
+  width: 223px;
+  height: 479px;
   position: relative;
-  display: flex;
-  flex-direction: column;
-
-  background-color: #020617;
-  border: 1px solid #334155;
-  border-radius: 12px;
-
+  border: 2px solid $border;
   overflow: hidden;
   color: #fff;
-
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-  }
 }
 
-/* Wishlist */
-.wishlist {
+.media {
+  position: relative;
+  z-index: 1;
+  height: 312px;
+  background: #120233;
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: translateY(4px);
+}
+
+.wishlistBtn {
   position: absolute;
   top: 10px;
   right: 10px;
 
-  background: rgba(2, 6, 23, 0.8);
-  border: 1px solid #334155;
-  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
 
-  width: 32px;
-  height: 32px;
+  opacity: 0;
+  pointer-events: none;
+
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  background: rgba(0, 0, 0, 0.25);
 
   color: #fff;
   cursor: pointer;
+
+  transition: opacity 0.18s ease, border-color 0.15s ease, background 0.15s ease;
 }
 
-/* Image */
-.photo {
-  background-color: #020617;
-  aspect-ratio: 16 / 9;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+.card:hover .wishlistBtn {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-/* Content */
+.wishlistBtn:hover {
+  border-color: rgba(255, 255, 255, 0.95);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.panel {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 315px;
+  transform: translateY(115px);
+  transition: transform 0.5s ease;
+  background: transparent;
+}
+
+.card:hover .panel {
+  transform: translateY(0);
+}
+
+.panelBg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(#{$platformH} - 1px);
+  bottom: 0;
+
+  background: $bg;
+  z-index: 1;
+}
+
+.cashbackBadge {
+  position: absolute;
+  left: 0;
+  top: -45px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: $lime;
+  color: #06101a;
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.badgeIcon {
+  line-height: 1;
+}
+
+.platformBar {
+  height: $platformH;
+  padding: 0 10px;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 3;
+}
+
+.card:hover .platformBar {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.platformIcon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.platformText {
+  font-size: 12px;
+  font-weight: 900;
+}
+
 .content {
-  padding: 12px;
+  position: relative;
+  z-index: 2;
+  padding: 44px 14px 14px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-}
-
-.platform {
-  font-size: 11px;
-  text-transform: uppercase;
-  color: #94a3b8;
+  gap: 8px;
 }
 
 .title {
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.3;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.25;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.region {
+.regionRow {
+  margin-top: 2px;
+}
+
+.regionOk,
+.regionBad {
   font-size: 12px;
-  color: #94a3b8;
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
 }
 
-/* Prices */
-.prices {
+.regionOk {
+  color: #36f17d;
+}
+.regionBad {
+  color: #ff4b4b;
+}
+
+.baseRow {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.from {
+  color: $muted;
+  font-weight: 700;
+}
+
+.basePrice {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: line-through;
+  font-weight: 900;
+}
+
+.discount {
+  color: $lime;
+  font-weight: 1000;
+}
+
+.currentRow {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 4px;
 }
 
-.fullprice {
+.currentPrice {
+  font-size: 26px;
+  font-weight: 1000;
+  letter-spacing: -0.2px;
+}
+
+.infoWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.infoIcon {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 14px;
+  cursor: help;
+}
+
+.tooltip {
+  position: absolute;
+  left: 50%;
+  top: -10px;
+  transform: translate(-50%, -100%);
+
+  white-space: nowrap;
+  padding: 6px 8px;
+
+  background: rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
   font-size: 12px;
-  color: #94a3b8;
-  text-decoration: line-through;
-}
-
-.price {
-  font-size: 16px;
-  font-weight: 700;
-  color: #12eeba;
-}
-
-/* Cashback */
-.cashback {
-  font-size: 12px;
-  color: #38bdf8;
-}
-
-/* Actions */
-.actions {
-  margin-top: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.primary {
-  padding: 8px;
-  border-radius: 6px;
-  border: none;
-
-  background-color: #12eeba;
-  color: #020617;
-  font-weight: 600;
-
-  cursor: pointer;
-}
-
-.secondary {
-  padding: 8px;
-  border-radius: 6px;
-  background: transparent;
-
-  border: 1px solid #334155;
   color: #fff;
 
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease;
+}
+
+.infoWrap:hover .tooltip {
+  opacity: 1;
+}
+
+.cashbackText {
+  font-size: 13px;
+  font-weight: 800;
+  color: $muted;
+}
+
+.cashbackValue {
+  color: $lime;
+  font-weight: 1000;
+}
+
+.wishlistCount {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 13px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.heart {
+  opacity: 0.95;
+}
+
+.actions {
+  margin-top: 10px;
+  display: grid;
+  gap: 10px;
+}
+
+.btnPrimary {
+  height: 44px;
+  border: none;
   cursor: pointer;
+
+  font-weight: 1000;
+  font-size: 16px;
+
+  background: #f4d20b;
+  color: #1a1a1a;
+}
+
+.btnSecondary {
+  height: 44px;
+  cursor: pointer;
+
+  background: transparent;
+  color: #fff;
+
+  font-weight: 1000;
+  font-size: 16px;
+
+  border: 2px solid rgba(255, 255, 255, 0.85);
 }
