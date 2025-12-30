@@ -1,41 +1,71 @@
 import express from "express";
 import cors from "cors";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+import dotenv from "dotenv";
+import { pool } from "./db.js";
+
+dotenv.config();
 
 const app = express();
-const PORT = 3001;
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const itemsPath = path.join(__dirname, "items.json");
-const items = JSON.parse(fs.readFileSync(itemsPath, "utf-8"));
-
 app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
-app.use(express.static("public"));
 
-app.get("/health", (req, res) => {
-  res.json({ status: "ok" });
-});
+app.get("/list", async (req, res) => {
+  const q = (req.query.search || "").trim();
+  const like = `%${q}%`;
 
-app.get("/items", (req, res) => {
-  res.json(items);
-});
+  try {
+    const [rows] = await pool.query(
+      `
+      SELECT
+        id,
+        photo,
+        platform_icon,
+        platform,
+        title,
+        region_label,
+        region_ok,
+        has_discount,
+        base_price,
+        discount,
+        current_price,
+        price_info,
+        has_cashback,
+        cashback,
+        wishlisted,
+        available
+      FROM offers
+      WHERE (? = '' OR title LIKE ?)
+      ORDER BY id DESC
+      LIMIT 100
+      `,
+      [q, like]
+    );
 
-app.get("/items/:id", (req, res) => {
-  const id = Number(req.params.id);
-  const item = items.find((i) => i.id === id);
+    const out = rows.map((r) => ({
+      id: r.id,
+      photo: r.photo,
+      platformIcon: r.platform_icon,
+      platform: r.platform,
+      title: r.title,
+      regionLabel: r.region_label,
+      regionOk: Boolean(r.region_ok),
+      hasDiscount: Boolean(r.has_discount),
+      basePrice: String(r.base_price),
+      discount: r.discount == null ? null : String(r.discount),
+      currentPrice: String(r.current_price),
+      priceInfo: r.price_info,
+      hasCashback: Boolean(r.has_cashback),
+      cashback: r.cashback == null ? null : String(r.cashback),
+      wishlisted: r.wishlisted,
+      available: Boolean(r.available),
+    }));
 
-  if (!item) {
-    return res.status(404).json({ message: "Item not found" });
+    res.json(out);
+  } catch (e) {
+    console.error("DB error:", e);
+    res.status(500).json({ status: "fail", error: e.message });
   }
-
-  res.json(item);
 });
 
-app.listen(PORT, () => {
-  console.log(`API running at http://localhost:${PORT}`);
-});
+const PORT = Number(process.env.PORT || 3001);
+app.listen(PORT, () => console.log(`API running at http://localhost:${PORT}`));
