@@ -188,13 +188,6 @@ $platformH: 30px;
   color: #ff4b4b;
 }
 
-.baseRow {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  font-size: 13px;
-}
-
 .from {
   color: $muted;
   font-weight: 700;
@@ -341,4 +334,35 @@ $platformH: 30px;
 
 .card.sold:hover .soldOverlay {
   background: rgba(0, 0, 0, 0.45);
+}
+
+.baseRowAvailable {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.baseRowUnavailable {
+  margin-top: 35px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 17px;
+  color: rgb(255, 255, 255);
+}
+
+.soldOutIcon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
+.soldOutText {
+  font-weight: 1000;
+  position: relative;
+  top: -1px;
 }

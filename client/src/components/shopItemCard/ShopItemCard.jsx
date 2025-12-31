@@ -49,9 +49,34 @@ export default function ShopItemCard({
               </span>
             </div>
 
-            <div className={styles.baseRow}>
-              <span className={styles.from}>X</span>
-              <span className={styles.from}>Sold out</span>
+            <div className={styles.baseRowUnavailable}>
+              <svg
+                className={styles.soldOutIcon}
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <rect
+                  x="2"
+                  y="2"
+                  width="20"
+                  height="20"
+                  rx="4"
+                  ry="4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                />
+                <circle cx="9" cy="10" r="1.2" fill="currentColor" />
+                <circle cx="15" cy="10" r="1.2" fill="currentColor" />
+                <path
+                  d="M8 16c1.2-1 2.8-1.5 4-1.5s2.8.5 4 1.5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  fill="none"
+                  strokeLinecap="round"
+                />
+              </svg>
+              <span className={styles.soldOutText}>Sold out</span>
             </div>
 
             <div className={styles.wishlistCount}>
@@ -103,7 +128,7 @@ export default function ShopItemCard({
             </span>
           </div>
 
-          <div className={styles.baseRow}>
+          <div className={styles.baseRowAvailable}>
             <span className={styles.from}>From</span>
             <span className={styles.basePrice}>{basePrice}</span>
             <span className={styles.discount}>{discount}</span>
