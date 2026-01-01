@@ -1,8 +1,18 @@
 html,
 body {
   font-family: $font-primary;
+  margin: 0;
+  padding: 0;
+  background: #5115ca;
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }

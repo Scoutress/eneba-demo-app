@@ -1,3 +1,22 @@
 .page {
   background: #5115ca;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.gridBlock {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.text {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 20px 0;
 }

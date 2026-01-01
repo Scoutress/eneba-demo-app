@@ -5,7 +5,8 @@ $bg: #2a0a6a;
 $platformH: 30px;
 
 .card {
-  width: 223px;
+  width: 100%;
+  max-width: 223px;
   height: 479px;
   position: relative;
   border: 2px solid $border;
@@ -161,11 +162,9 @@ $platformH: 30px;
   font-size: 15px;
   font-weight: 900;
   line-height: 1.25;
-
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
   overflow: hidden;
+  display: -webkit-box;
+  display: box;
 }
 
 .regionRow {

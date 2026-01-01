@@ -40,42 +40,44 @@ const HomePage = () => {
   }, []);
 
   return (
-    <>
-      <div>
-        {loading && "Loading offers…"}
-        {error && error}
-        {!loading && !error && `Results found: ${items.length}`}
-      </div>
+    <div className={styles.page}>
+      <div className={styles.container}>
+        <div className={styles.gridBlock}>
+          <div className={styles.text}>
+            {loading && "Loading offers…"}
+            {error && error}
+            {!loading && !error && `Results found: ${items.length}`}
+          </div>
 
-      <div className={styles.page}>
-        <ItemsGrid>
-          {items.map((item) => (
-            <ShopItemCard
-              key={item.id}
-              photo={
-                item.photo?.startsWith("http")
-                  ? item.photo
-                  : `${API_BASE}${item.photo}`
-              }
-              platformIcon={item.platformIcon}
-              platform={item.platform}
-              title={item.title}
-              regionLabel={item.regionLabel}
-              regionOk={item.regionOk}
-              hasDiscount={item.hasDiscount}
-              basePrice={item.basePrice}
-              discount={item.discount}
-              currentPrice={item.currentPrice}
-              priceInfo={item.priceInfo}
-              hasCashback={item.hasCashback}
-              cashback={item.cashback}
-              wishlisted={item.wishlisted}
-              available={item.available}
-            />
-          ))}
-        </ItemsGrid>
+          <ItemsGrid>
+            {items.map((item) => (
+              <ShopItemCard
+                key={item.id}
+                photo={
+                  item.photo?.startsWith("http")
+                    ? item.photo
+                    : `${API_BASE}${item.photo}`
+                }
+                platformIcon={item.platformIcon}
+                platform={item.platform}
+                title={item.title}
+                regionLabel={item.regionLabel}
+                regionOk={item.regionOk}
+                hasDiscount={item.hasDiscount}
+                basePrice={item.basePrice}
+                discount={item.discount}
+                currentPrice={item.currentPrice}
+                priceInfo={item.priceInfo}
+                hasCashback={item.hasCashback}
+                cashback={item.cashback}
+                wishlisted={item.wishlisted}
+                available={item.available}
+              />
+            ))}
+          </ItemsGrid>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
