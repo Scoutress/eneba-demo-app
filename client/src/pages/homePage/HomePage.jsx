@@ -1,52 +1,72 @@
 import { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import styles from "./HomePage.module.scss";
 import ItemsGrid from "../../components/itemsGrid/ItemsGrid.jsx";
 import ShopItemCard from "../../components/shopItemCard/ShopItemCard.jsx";
 
 const HomePage = () => {
+  const { searchValue } = useOutletContext();
+
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
   const API_BASE = "http://localhost:3001";
 
   useEffect(() => {
-    let alive = true;
+    const controller = new AbortController();
 
-    const loadItems = async () => {
+    const id = setTimeout(async () => {
       setLoading(true);
       setError(null);
 
+      const q = searchValue.trim();
+      const url = q
+        ? `${API_BASE}/list?search=${encodeURIComponent(q)}`
+        : `${API_BASE}/list`;
+
       try {
-        const res = await fetch("http://localhost:3001/list");
+        const res = await fetch(url, { signal: controller.signal });
+
         if (!res.ok) {
           throw new Error(`Failed to load items (${res.status})`);
         }
 
         const data = await res.json();
-        if (alive) setItems(data);
+        setItems(data);
       } catch (err) {
+        if (err.name === "AbortError") return;
         console.error(err);
-        if (alive) setError("Failed to load offers");
+        setError("Failed to load offers");
+        setItems([]);
       } finally {
-        if (alive) setLoading(false);
+        if (!controller.signal.aborted) setLoading(false);
       }
-    };
-
-    loadItems();
+    }, 0);
 
     return () => {
-      alive = false;
+      clearTimeout(id);
+      controller.abort();
     };
-  }, []);
+  }, [searchValue]);
 
   return (
     <div className={styles.page}>
       <div className={styles.container}>
         <div className={styles.gridBlock}>
           <div className={styles.text}>
-            {loading && "Loading offers…"}
             {error && error}
-            {!loading && !error && `Results found: ${items.length}`}
+
+            {!error && items.length === 0 && loading && "Loading offers…"}
+
+            {!error && items.length > 0 && (
+              <span>
+                Results found: {items.length}
+                {loading && <span className={styles.spinner} />}
+              </span>
+            )}
+
+            {!error && !loading && items.length === 0 && "No results"}
           </div>
 
           <ItemsGrid>

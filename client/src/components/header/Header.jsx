@@ -26,10 +26,7 @@ function useIsMobile(breakpointPx = 880, { onExitMobile } = {}) {
     };
 
     mq.addEventListener("change", handleChange);
-
-    return () => {
-      mq.removeEventListener("change", handleChange);
-    };
+    return () => mq.removeEventListener("change", handleChange);
   }, [breakpointPx, onExitMobile]);
 
   return isMobile;
@@ -66,18 +63,21 @@ function SearchIconBtn({ onClick }) {
   );
 }
 
-export default function Header() {
+export default function Header({ searchValue, setSearchValue }) {
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
 
-  const closeMobileSearch = useCallback(() => setMobileSearchOpen(false), []);
-  const openMobileSearch = useCallback(() => setMobileSearchOpen(true), []);
+  const closeMobileSearch = useCallback(() => {
+    setMobileSearchOpen(false);
+  }, []);
+
+  const openMobileSearch = useCallback(() => {
+    setMobileSearchOpen(true);
+  }, []);
 
   const isMobile = useIsMobile(880, { onExitMobile: closeMobileSearch });
 
   useEffect(() => {
-    if (!isMobile) return;
-    if (!mobileSearchOpen) return;
+    if (!isMobile || !mobileSearchOpen) return;
 
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
