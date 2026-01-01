@@ -1,5 +1,6 @@
 import styles from "./Header.module.scss";
-import logo from "../../../../server/public/images/eneba_logo.svg";
+import logo from "../../../../server/public/images/eneba_logo.png";
+import SearchBar from "../../components/searchBar/SearchBar.jsx";
 
 export default function Header() {
   return (
@@ -8,16 +9,7 @@ export default function Header() {
         <img src={logo} alt="App logo" />
       </a>
 
-      <div className={styles.search}>
-        <input
-          type="text"
-          placeholder="Search for games, top-ups and more"
-          aria-label="Search"
-        />
-        <button type="button" aria-label="Search">
-          🔍
-        </button>
-      </div>
+      <SearchBar />
 
       <div className={styles.region}>
         <button className={styles.btn}>
