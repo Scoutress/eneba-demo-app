@@ -52,6 +52,7 @@
 .language,
 .currency {
   transition: color 120ms ease;
+  white-space: nowrap;
 }
 
 .sep {

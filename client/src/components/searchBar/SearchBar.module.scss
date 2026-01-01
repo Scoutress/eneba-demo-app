@@ -1,4 +1,7 @@
 .search {
+  --control-h: 60px;
+  --icon-w: 60px;
+
   position: relative;
   width: 100%;
   max-width: 600px;
@@ -9,8 +12,18 @@
   background: #5115ca;
   border: 2px solid #dbe1e9;
   border-radius: 0;
-
+  overflow: hidden;
   transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.fullWidth {
+  max-width: none;
+}
+
+.fullHeight {
+  height: 100%;
+  --control-h: 100%;
+  --icon-w: 54px;
 }
 
 .search:focus-within {
@@ -19,38 +32,46 @@
 }
 
 .iconLeft {
-  width: 60px;
-  height: 60px;
+  width: var(--icon-w);
+  height: var(--control-h);
   display: grid;
   place-items: center;
-
+  flex-shrink: 0;
   color: rgba(255, 255, 255, 0.899);
   pointer-events: none;
 }
 
 .iconSvg {
-  width: 35px;
-  height: 35px;
+  width: 28px;
+  height: 28px;
 }
 
 .input {
   flex: 1;
-  height: 60px;
+  height: var(--control-h);
   border: 0;
   outline: none;
+  min-width: 0;
 
   background: transparent;
   color: #fff;
 
-  padding: 0 40px 0 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 
-  font-size: 20px; /* ← bigger text */
-  line-height: 1.2; /* ← keeps it vertically centered */
+  padding: 0 44px 0 0;
+
+  font-size: 20px;
+  line-height: 1.2;
   font-weight: 500;
 
   &::placeholder {
     color: #94a3b8;
-    font-size: 20px; /* same as input text */
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -81,11 +102,6 @@
 
   &:active {
     transform: translateY(-50%) scale(0.96);
-  }
-
-  span {
-    font-size: 60px;
-    line-height: 1;
   }
 }
 

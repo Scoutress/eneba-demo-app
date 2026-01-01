@@ -1,19 +1,24 @@
-.header {
-  height: 108px;
+.headerDesktop {
+  background: #5115ca;
+}
+
+.inner {
+  max-width: 1255px;
+  margin: 0 auto;
   padding: 0 24px;
 
+  height: 108px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  background: #5115ca;
 }
 
 .left {
   display: flex;
   align-items: center;
-  gap: 0px;
   min-width: 0;
+  gap: 12px;
+  flex: 1;
 }
 
 .right {
@@ -22,23 +27,77 @@
   gap: 1px;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-
-  img {
-    height: 70px;
-    display: block;
-  }
+.logo img {
+  height: 70px;
+  display: block;
 }
 
 .searchWrap {
-  width: min(600px, 42vw);
+  flex: 1;
   min-width: 240px;
+  max-width: 700px;
+  height: 100%;
+  display: flex;
+  align-items: stretch;
 }
 
 .regionWrap {
+  white-space: nowrap;
+}
+
+.iconBtn {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.88);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+
+  &:hover {
+    color: #f4d20b;
+  }
+}
+
+.iconSvg {
+  width: 26px;
+  height: 26px;
+}
+
+.headerMobile {
+  background: #5115ca;
+  height: 54px;
+  padding: 0 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoMobile img {
+  height: 35px;
+  display: block;
+}
+
+.rightMobile {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+}
+
+.headerMobileSearch {
+  background: #5115ca;
+  height: 54px;
+  padding: 0 12px;
+
+  display: flex;
+  align-items: center;
+}
+
+.mobileSearchField {
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
 }
