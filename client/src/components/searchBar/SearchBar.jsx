@@ -9,10 +9,23 @@ export default function HeaderSearch() {
   return (
     <div className={styles.search}>
       <span className={styles.iconLeft} aria-hidden="true">
-        <svg viewBox="0 0 24 24" className={styles.iconSvg}>
-          <path
-            d="M10.5 3a7.5 7.5 0 105.05 13.05l3.2 3.2a1 1 0 001.42-1.42l-3.2-3.2A7.5 7.5 0 0010.5 3zm0 2a5.5 5.5 0 110 11 5.5 5.5 0 010-11z"
-            fill="currentColor"
+        <svg className={styles.iconSvg} viewBox="0 0 24 24" aria-hidden="true">
+          <circle
+            cx="11"
+            cy="11"
+            r="7"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+          />
+          <line
+            x1="16.5"
+            y1="16.5"
+            x2="21"
+            y2="21"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeLinecap="round"
           />
         </svg>
       </span>
@@ -33,7 +46,30 @@ export default function HeaderSearch() {
           aria-label="Clear search"
           onClick={() => setValue("")}
         >
-          <span aria-hidden="true">×</span>
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            className={styles.clearIcon}
+          >
+            <line
+              x1="6"
+              y1="6"
+              x2="18"
+              y2="18"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+            />
+            <line
+              x1="18"
+              y1="6"
+              x2="6"
+              y2="18"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+            />
+          </svg>
         </button>
       )}
     </div>

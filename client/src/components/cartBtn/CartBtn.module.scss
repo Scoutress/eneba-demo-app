@@ -1,0 +1,28 @@
+.btn {
+  width: 40px;
+  height: 40px;
+
+  display: grid;
+  place-items: center;
+
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+
+  color: rgba(255, 255, 255, 0.85);
+  transition: color 120ms ease, transform 120ms ease;
+
+  &:hover {
+    color: #f4d20b;
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+
+  svg {
+    width: 30px;
+    height: 30px;
+    display: block;
+  }
+}

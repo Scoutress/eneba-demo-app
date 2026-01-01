@@ -1,75 +1,44 @@
 .header {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-
-  height: 64px;
+  height: 108px;
   padding: 0 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
   background: #5115ca;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 0px;
+  min-width: 0;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 1px;
 }
 
 .logo {
   display: flex;
   align-items: center;
+  text-decoration: none;
 
   img {
-    height: 80px;
+    height: 70px;
+    display: block;
   }
 }
 
-.nav {
-  display: flex;
-  gap: 16px;
-
-  a {
-    color: #fff;
-    text-decoration: none;
-  }
+.searchWrap {
+  width: min(600px, 42vw);
+  min-width: 240px;
 }
 
-.region {
+.regionWrap {
   display: flex;
   align-items: center;
-}
-
-.btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  padding: 6px 10px;
-  border-radius: 8px;
-
-  background-color: transparent;
-  border: 1px solid #334155;
-  cursor: pointer;
-
-  color: #fff;
-
-  &:hover {
-    background-color: #020617;
-  }
-}
-
-.region_icon {
-  font-size: 20px;
-  line-height: 1;
-}
-
-.text {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.language {
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1.1;
-}
-
-.currency {
-  font-size: 11px;
-  color: #94a3b8;
-  line-height: 1.1;
 }
