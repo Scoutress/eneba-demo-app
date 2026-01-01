@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import styles from "./HomePage.module.scss";
 import ItemsGrid from "../../components/itemsGrid/ItemsGrid.jsx";
 import ShopItemCard from "../../components/shopItemCard/ShopItemCard.jsx";
 
@@ -47,32 +47,34 @@ const HomePage = () => {
         {!loading && !error && `Results found: ${items.length}`}
       </div>
 
-      <ItemsGrid>
-        {items.map((item) => (
-          <ShopItemCard
-            key={item.id}
-            photo={
-              item.photo?.startsWith("http")
-                ? item.photo
-                : `${API_BASE}${item.photo}`
-            }
-            platformIcon={item.platformIcon}
-            platform={item.platform}
-            title={item.title}
-            regionLabel={item.regionLabel}
-            regionOk={item.regionOk}
-            hasDiscount={item.hasDiscount}
-            basePrice={item.basePrice}
-            discount={item.discount}
-            currentPrice={item.currentPrice}
-            priceInfo={item.priceInfo}
-            hasCashback={item.hasCashback}
-            cashback={item.cashback}
-            wishlisted={item.wishlisted}
-            available={item.available}
-          />
-        ))}
-      </ItemsGrid>
+      <div className={styles.page}>
+        <ItemsGrid>
+          {items.map((item) => (
+            <ShopItemCard
+              key={item.id}
+              photo={
+                item.photo?.startsWith("http")
+                  ? item.photo
+                  : `${API_BASE}${item.photo}`
+              }
+              platformIcon={item.platformIcon}
+              platform={item.platform}
+              title={item.title}
+              regionLabel={item.regionLabel}
+              regionOk={item.regionOk}
+              hasDiscount={item.hasDiscount}
+              basePrice={item.basePrice}
+              discount={item.discount}
+              currentPrice={item.currentPrice}
+              priceInfo={item.priceInfo}
+              hasCashback={item.hasCashback}
+              cashback={item.cashback}
+              wishlisted={item.wishlisted}
+              available={item.available}
+            />
+          ))}
+        </ItemsGrid>
+      </div>
     </>
   );
 };
