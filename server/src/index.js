@@ -1,3 +1,5 @@
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -7,7 +9,12 @@ dotenv.config();
 
 const app = express();
 app.use(cors({ origin: "http://localhost:5173" }));
-app.use(express.json());
+app.use(express.json({ limit: "50kb" }));
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  })
+);
 app.use(express.static("public"));
 
 app.get("/list", async (req, res) => {
@@ -65,6 +72,54 @@ app.get("/list", async (req, res) => {
   } catch (e) {
     console.error("DB error:", e);
     res.status(500).json({ status: "fail", error: e.message });
+  }
+});
+
+const reportsLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.use("/reports", reportsLimiter);
+
+app.post("/reports", async (req, res) => {
+  try {
+    const { title, description, steps } = req.body ?? {};
+
+    const t = String(title ?? "").trim();
+    const d = String(description ?? "").trim();
+    const s = steps == null ? null : String(steps).trim();
+
+    if (!t || !d) {
+      return res
+        .status(400)
+        .json({ error: "title and description are required" });
+    }
+    if (t.length > 200) {
+      return res.status(400).json({ error: "title must be <= 200 characters" });
+    }
+    if (d.length > 5000) {
+      return res
+        .status(400)
+        .json({ error: "description must be <= 5000 characters" });
+    }
+    if (s && s.length > 5000) {
+      return res
+        .status(400)
+        .json({ error: "steps must be <= 5000 characters" });
+    }
+
+    const [result] = await pool.execute(
+      "INSERT INTO reports (title, description, steps) VALUES (?, ?, ?)",
+      [t, d, s]
+    );
+
+    return res.status(201).json({ id: result.insertId });
+  } catch (err) {
+    console.error("POST /reports failed:", err);
+    return res.status(500).json({ error: "internal server error" });
   }
 });
 

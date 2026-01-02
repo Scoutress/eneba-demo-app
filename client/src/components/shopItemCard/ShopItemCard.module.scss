@@ -14,6 +14,10 @@ $platformH: 30px;
   color: #fff;
 }
 
+.sold {
+  position: relative;
+}
+
 .media {
   position: relative;
   z-index: 1;
@@ -29,32 +33,14 @@ $platformH: 30px;
   display: block;
 }
 
-.wishlistBtn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 34px;
-  height: 34px;
-  display: grid;
-  place-items: center;
+.wishlistBtnHost {
   opacity: 0;
   pointer-events: none;
-  border-radius: 999px;
-  border: 2px solid rgba(255, 255, 255, 0.45);
-  background: rgba(0, 0, 0, 0.25);
-  color: #fff;
-  cursor: pointer;
-  transition: opacity 0.18s ease, border-color 0.15s ease, background 0.15s ease;
 }
 
-.card:hover .wishlistBtn {
+.card:hover .wishlistBtnHost {
   opacity: 1;
   pointer-events: auto;
-}
-
-.wishlistBtn:hover {
-  border-color: rgba(255, 255, 255, 0.95);
-  background: rgba(0, 0, 0, 0.5);
 }
 
 .panel {
@@ -71,6 +57,10 @@ $platformH: 30px;
 
 .card:hover .panel {
   transform: translateY(0);
+}
+
+.card.sold:hover .panel {
+  transform: translateY(115px);
 }
 
 .panelBg {
@@ -179,8 +169,16 @@ $platformH: 30px;
 .regionOk {
   color: #36f17d;
 }
+
 .regionBad {
   color: #ff4b4b;
+}
+
+.baseRowAvailable {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 13px;
 }
 
 .from {
@@ -229,29 +227,6 @@ $platformH: 30px;
   transform: translateY(-2px);
   line-height: 1;
   height: 26px;
-}
-
-.tooltip {
-  position: absolute;
-  left: 50%;
-  top: -10px;
-  transform: translate(-50%, -100%);
-  white-space: nowrap;
-  padding: 6px 8px;
-  background: rgba(0, 0, 0, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 9999;
-  font-size: 12px;
-  color: #fff;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.12s ease;
-}
-
-.infoWrap:hover .tooltip {
-  opacity: 1;
 }
 
 .cashbackText {
@@ -311,43 +286,6 @@ $platformH: 30px;
   border: 2px solid rgba(255, 255, 255, 0.85);
 }
 
-.sold {
-  position: relative;
-}
-
-.soldOverlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.35);
-  opacity: 1;
-  pointer-events: none;
-  transition: opacity 0.5s ease;
-  z-index: 4;
-}
-
-.card:hover .panel {
-  transform: translateY(0);
-}
-
-.card.sold:hover .panel {
-  transform: translateY(115px);
-}
-
-.card.sold:hover .soldOverlay {
-  background: rgba(0, 0, 0, 0.45);
-}
-
-.baseRowAvailable {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  font-size: 13px;
-}
-
-.noDiscountGap {
-  margin-top: 20px;
-}
-
 .baseRowUnavailable {
   margin-top: 35px;
   display: flex;
@@ -370,12 +308,27 @@ $platformH: 30px;
   top: -1px;
 }
 
+.soldOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  z-index: 4;
+}
+
+.card.sold:hover .soldOverlay {
+  background: rgba(0, 0, 0, 0.45);
+}
+
 .tooltipPortal {
   position: fixed;
   transform: translate(-50%, -100%);
   padding: 6px 8px;
-  width: 300px;
+  width: auto;
   max-width: 300px;
+  white-space: pre-line;
   background: rgba(0, 0, 0, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(8px);
@@ -384,6 +337,4 @@ $platformH: 30px;
   color: #fff;
   z-index: 999999;
   pointer-events: none;
-  white-space: pre-line;
-  line-height: 1.35;
 }

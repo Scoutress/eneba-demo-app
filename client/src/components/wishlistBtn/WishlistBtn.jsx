@@ -1,8 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./WishlistBtn.module.scss";
 
 export default function WishlistBtn() {
+  const navigate = useNavigate();
   return (
-    <button type="button" className={styles.btn} aria-label="Wishlist">
+    <button
+      type="button"
+      className={styles.btn}
+      aria-label="Wishlist"
+      onClick={() => navigate("/demo")}
+    >
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path
           d="M12 20.5

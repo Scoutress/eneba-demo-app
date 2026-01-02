@@ -7,6 +7,10 @@ const Routes = {
     link: "/demo",
     name: "DemoPage",
   },
+  reportPage: {
+    link: "/report",
+    name: "ReportPage",
+  },
 };
 
 export default Routes;

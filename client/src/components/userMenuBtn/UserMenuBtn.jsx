@@ -1,8 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./UserMenuBtn.module.scss";
 
 export default function UserMenuBtn() {
+  const navigate = useNavigate();
   return (
-    <button type="button" className={styles.btn} aria-label="User menu">
+    <button
+      type="button"
+      className={styles.btn}
+      aria-label="User menu"
+      onClick={() => navigate("/demo")}
+    >
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <circle
           cx="12"

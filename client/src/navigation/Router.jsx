@@ -4,6 +4,7 @@ import HomePage from "../pages/homePage/HomePage.jsx";
 import DemoPage from "../pages/demoPage/DemoPage.jsx";
 import Routes from "./Routes.jsx";
 import Root from "./Root.jsx";
+import ReportPage from "../pages/reportPage/ReportPage.jsx";
 
 const Router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const Router = createBrowserRouter([
       {
         path: Routes.demoPage.link,
         element: <DemoPage />,
+      },
+      {
+        path: Routes.reportPage.link,
+        element: <ReportPage />,
       },
     ],
   },

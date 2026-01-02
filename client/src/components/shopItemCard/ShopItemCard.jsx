@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./ShopItemCard.module.scss";
+import AddToWishlistBtn from "../addToWishlist/AddToWishlistBtn.jsx";
 
 export default function ShopItemCard({
   photo,
@@ -19,6 +21,9 @@ export default function ShopItemCard({
   wishlisted,
   available,
 }) {
+  const navigate = useNavigate();
+  const goDemo = () => navigate("/demo");
+
   const showDiscount = Boolean(
     hasDiscount && basePrice != null && discount != null
   );
@@ -40,29 +45,46 @@ export default function ShopItemCard({
 
   const PRICE_INFO_TEXT = {
     short: "Price is not final. Service fee applies at checkout.",
-    big: "Strike-through price is the recommended retail price, not a reduction of price.\n\nPrice is not final. Service fee applies at checkout.",
+    big:
+      "Strike-through price is the recommended retail price, not a reduction of price.\n\n" +
+      "Price is not final. Service fee applies at checkout.",
   };
 
+  const WISHLIST_INFO_TEXT = "Times wishlisted";
   const resolvedPriceInfo = PRICE_INFO_TEXT?.[priceInfo] ?? null;
 
   const [tipOpen, setTipOpen] = useState(false);
+  const [tipText, setTipText] = useState(null);
   const [tipPos, setTipPos] = useState({ left: 0, top: 0 });
 
-  const onInfoEnter = (e) => {
-    if (!resolvedPriceInfo) return;
-    const r = e.currentTarget.getBoundingClientRect();
+  const onTipEnter = (e, text) => {
+    if (!text) return;
 
     setTipPos({
-      left: r.left + r.width / 2,
-      top: r.top,
+      left: e.clientX,
+      top: e.clientY - 12,
     });
+
+    setTipText(text);
     setTipOpen(true);
   };
 
-  const onInfoLeave = () => setTipOpen(false);
+  const onTipMove = (e) => {
+    if (!tipOpen) return;
+
+    setTipPos({
+      left: e.clientX,
+      top: e.clientY - 12,
+    });
+  };
+
+  const onTipLeave = () => {
+    setTipOpen(false);
+    setTipText(null);
+  };
 
   const Tip = useMemo(() => {
-    if (!tipOpen || !resolvedPriceInfo) return null;
+    if (!tipOpen || !tipText) return null;
 
     return createPortal(
       <div
@@ -70,24 +92,32 @@ export default function ShopItemCard({
         style={{ left: `${tipPos.left}px`, top: `${tipPos.top}px` }}
         role="tooltip"
       >
-        {resolvedPriceInfo}
+        {tipText}
       </div>,
       document.body
     );
-  }, [tipOpen, tipPos.left, tipPos.top, resolvedPriceInfo]);
+  }, [tipOpen, tipText, tipPos.left, tipPos.top]);
+
+  const goDemoStop = (e) => {
+    e.stopPropagation();
+    goDemo();
+  };
 
   if (!available) {
     return (
-      <article className={`${styles.card} ${styles.sold}`}>
+      <article
+        className={`${styles.card} ${styles.sold}`}
+        role="button"
+        tabIndex={0}
+        onClick={goDemo}
+        onKeyDown={(e) => e.key === "Enter" && goDemo()}
+      >
         <div className={styles.media}>
           <img className={styles.photo} src={photo} alt={title} />
-          <button
-            type="button"
-            className={styles.wishlistBtn}
-            aria-label="Add to wishlist"
-          >
-            ♡
-          </button>
+
+          <div className={styles.wishlistBtnHost}>
+            <AddToWishlistBtn onClick={goDemoStop} />
+          </div>
         </div>
 
         <div className={styles.panel}>
@@ -142,7 +172,18 @@ export default function ShopItemCard({
               <span className={styles.soldOutText}>Sold out</span>
             </div>
 
-            <div className={styles.wishlistCount}>
+            <div
+              className={styles.wishlistCount}
+              onMouseEnter={(e) => {
+                e.stopPropagation();
+                onTipEnter(e, WISHLIST_INFO_TEXT);
+              }}
+              onMouseMove={onTipMove}
+              onMouseLeave={(e) => {
+                e.stopPropagation();
+                onTipLeave();
+              }}
+            >
               <svg
                 className={styles.heartIcon}
                 viewBox="0 0 24 24"
@@ -150,14 +191,14 @@ export default function ShopItemCard({
               >
                 <path
                   d="
-        M12 21
-        C12 21 4 14.6 4 9.5
-        C4 7 6 5 8.5 5
-        C10.1 5 11.5 5.9 12 7
-        C12.5 5.9 13.9 5 15.5 5
-        C18 5 20 7 20 9.5
-        C20 14.6 12 21 12 21
-      "
+                    M12 21
+                    C12 21 4 14.6 4 9.5
+                    C4 7 6 5 8.5 5
+                    C10.1 5 11.5 5.9 12 7
+                    C12.5 5.9 13.9 5 15.5 5
+                    C18 5 20 7 20 9.5
+                    C20 14.6 12 21 12 21
+                  "
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
@@ -171,22 +212,26 @@ export default function ShopItemCard({
           </div>
         </div>
 
+        {Tip}
         <div className={styles.soldOverlay} />
       </article>
     );
   }
 
   return (
-    <article className={styles.card}>
+    <article
+      className={styles.card}
+      role="button"
+      tabIndex={0}
+      onClick={goDemo}
+      onKeyDown={(e) => e.key === "Enter" && goDemo()}
+    >
       <div className={styles.media}>
         <img className={styles.photo} src={photo} alt={title} />
-        <button
-          type="button"
-          className={styles.wishlistBtn}
-          aria-label="Add to wishlist"
-        >
-          ♡
-        </button>
+
+        <div className={styles.wishlistBtnHost}>
+          <AddToWishlistBtn onClick={goDemoStop} />
+        </div>
       </div>
 
       <div className={styles.panel}>
@@ -239,9 +284,15 @@ export default function ShopItemCard({
             {resolvedPriceInfo && (
               <span
                 className={styles.infoWrap}
-                onMouseEnter={onInfoEnter}
-                onMouseLeave={onInfoLeave}
-                aria-label="Price info"
+                onMouseEnter={(e) => {
+                  e.stopPropagation();
+                  onTipEnter(e, resolvedPriceInfo);
+                }}
+                onMouseMove={onTipMove}
+                onMouseLeave={(e) => {
+                  e.stopPropagation();
+                  onTipLeave();
+                }}
               >
                 <span className={styles.infoIcon}>ⓘ</span>
               </span>
@@ -259,7 +310,18 @@ export default function ShopItemCard({
             </div>
           )}
 
-          <div className={styles.wishlistCount}>
+          <div
+            className={styles.wishlistCount}
+            onMouseEnter={(e) => {
+              e.stopPropagation();
+              onTipEnter(e, WISHLIST_INFO_TEXT);
+            }}
+            onMouseMove={onTipMove}
+            onMouseLeave={(e) => {
+              e.stopPropagation();
+              onTipLeave();
+            }}
+          >
             <svg
               className={styles.heartIcon}
               viewBox="0 0 24 24"
@@ -267,14 +329,14 @@ export default function ShopItemCard({
             >
               <path
                 d="
-        M12 21
-        C12 21 4 14.6 4 9.5
-        C4 7 6 5 8.5 5
-        C10.1 5 11.5 5.9 12 7
-        C12.5 5.9 13.9 5 15.5 5
-        C18 5 20 7 20 9.5
-        C20 14.6 12 21 12 21
-      "
+                  M12 21
+                  C12 21 4 14.6 4 9.5
+                  C4 7 6 5 8.5 5
+                  C10.1 5 11.5 5.9 12 7
+                  C12.5 5.9 13.9 5 15.5 5
+                  C18 5 20 7 20 9.5
+                  C20 14.6 12 21 12 21
+                "
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -287,10 +349,18 @@ export default function ShopItemCard({
           </div>
 
           <div className={styles.actions}>
-            <button type="button" className={styles.btnPrimary}>
+            <button
+              type="button"
+              className={styles.btnPrimary}
+              onClick={goDemoStop}
+            >
               Add to cart
             </button>
-            <button type="button" className={styles.btnSecondary}>
+            <button
+              type="button"
+              className={styles.btnSecondary}
+              onClick={goDemoStop}
+            >
               Explore options
             </button>
           </div>

@@ -13,7 +13,7 @@ export default function DemoPage() {
       <p className={styles.text}>
         This is only a demo version.
         <br />
-        This functionality is not implemented.
+        Functionality is not implemented.
       </p>
 
       <button

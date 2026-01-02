@@ -9,7 +9,7 @@ export default function ReportBtn() {
     <div className={styles.wrapper}>
       <button
         className={styles.btn}
-        onClick={() => navigate("/demo")}
+        onClick={() => navigate("/report")}
         type="button"
       >
         Report a problem

@@ -1,8 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./CartBtn.module.scss";
 
 export default function CartBtn() {
+  const navigate = useNavigate();
   return (
-    <button type="button" className={styles.btn} aria-label="Shopping cart">
+    <button
+      type="button"
+      className={styles.btn}
+      aria-label="Shopping cart"
+      onClick={() => navigate("/demo")}
+    >
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path
           d="M6 6h15l-1.5 9h-12z"
