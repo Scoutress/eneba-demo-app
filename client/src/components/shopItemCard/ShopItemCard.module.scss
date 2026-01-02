@@ -9,7 +9,7 @@ $platformH: 30px;
   max-width: 223px;
   height: 479px;
   position: relative;
-  border: 2px solid $border;
+  border: 1.5px solid $border;
   overflow: hidden;
   color: #fff;
 }
@@ -19,6 +19,7 @@ $platformH: 30px;
   z-index: 1;
   height: 312px;
   background: #120233;
+  overflow: hidden;
 }
 
 .photo {
@@ -32,22 +33,17 @@ $platformH: 30px;
   position: absolute;
   top: 10px;
   right: 10px;
-
   width: 34px;
   height: 34px;
   display: grid;
   place-items: center;
-
   opacity: 0;
   pointer-events: none;
-
   border-radius: 999px;
   border: 2px solid rgba(255, 255, 255, 0.45);
   background: rgba(0, 0, 0, 0.25);
-
   color: #fff;
   cursor: pointer;
-
   transition: opacity 0.18s ease, border-color 0.15s ease, background 0.15s ease;
 }
 
@@ -83,7 +79,6 @@ $platformH: 30px;
   right: 0;
   top: calc(#{$platformH} - 1px);
   bottom: 0;
-
   background: $bg;
   z-index: 1;
 }
@@ -113,21 +108,17 @@ $platformH: 30px;
   height: $platformH;
   padding: 0 10px;
   box-sizing: border-box;
-
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-
   background: rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-
   z-index: 3;
 }
 
@@ -162,9 +153,15 @@ $platformH: 30px;
   font-size: 15px;
   font-weight: 900;
   line-height: 1.25;
-  overflow: hidden;
+  min-height: calc(2 * 1.25em);
   display: -webkit-box;
-  display: box;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .regionRow {
@@ -198,7 +195,7 @@ $platformH: 30px;
 }
 
 .discount {
-  color: $lime;
+  color: #65ea65;
   font-weight: 1000;
 }
 
@@ -218,12 +215,20 @@ $platformH: 30px;
   position: relative;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  height: 26px;
 }
 
 .infoIcon {
   color: rgba(255, 255, 255, 0.55);
-  font-size: 14px;
-  cursor: help;
+  font-size: 21px;
+  cursor: default;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-2px);
+  line-height: 1;
+  height: 26px;
 }
 
 .tooltip {
@@ -231,18 +236,15 @@ $platformH: 30px;
   left: 50%;
   top: -10px;
   transform: translate(-50%, -100%);
-
   white-space: nowrap;
   padding: 6px 8px;
-
   background: rgba(0, 0, 0, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-
+  z-index: 9999;
   font-size: 12px;
   color: #fff;
-
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.12s ease;
@@ -255,11 +257,11 @@ $platformH: 30px;
 .cashbackText {
   font-size: 13px;
   font-weight: 800;
-  color: $muted;
+  color: #65ea65;
 }
 
 .cashbackValue {
-  color: $lime;
+  color: #65ea65;
   font-weight: 1000;
 }
 
@@ -267,14 +269,20 @@ $platformH: 30px;
   display: flex;
   align-items: center;
   gap: 6px;
-
   font-size: 13px;
   font-weight: 800;
   color: rgba(255, 255, 255, 0.85);
 }
 
-.heart {
+.heartIcon {
+  width: 19.5px;
+  height: 19.5px;
+  flex-shrink: 0;
   opacity: 0.95;
+}
+
+.wishlistValue {
+  font-size: 13px;
 }
 
 .actions {
@@ -287,10 +295,8 @@ $platformH: 30px;
   height: 44px;
   border: none;
   cursor: pointer;
-
   font-weight: 1000;
   font-size: 16px;
-
   background: #f4d20b;
   color: #1a1a1a;
 }
@@ -298,13 +304,10 @@ $platformH: 30px;
 .btnSecondary {
   height: 44px;
   cursor: pointer;
-
   background: transparent;
   color: #fff;
-
   font-weight: 1000;
   font-size: 16px;
-
   border: 2px solid rgba(255, 255, 255, 0.85);
 }
 
@@ -341,13 +344,15 @@ $platformH: 30px;
   font-size: 13px;
 }
 
+.noDiscountGap {
+  margin-top: 20px;
+}
+
 .baseRowUnavailable {
   margin-top: 35px;
-
   display: flex;
   align-items: center;
   gap: 10px;
-
   font-size: 17px;
   color: rgb(255, 255, 255);
 }
@@ -363,4 +368,22 @@ $platformH: 30px;
   font-weight: 1000;
   position: relative;
   top: -1px;
+}
+
+.tooltipPortal {
+  position: fixed;
+  transform: translate(-50%, -100%);
+  padding: 6px 8px;
+  width: 300px;
+  max-width: 300px;
+  background: rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 12px;
+  color: #fff;
+  z-index: 999999;
+  pointer-events: none;
+  white-space: pre-line;
+  line-height: 1.35;
 }
