@@ -262,6 +262,8 @@ export default function ShopItemCard({
             </span>
           </div>
 
+          {!hasCashback && <div className={styles.spacer} />}
+
           <div className={styles.baseRowAvailable}>
             <span className={styles.from}>From</span>
             {showDiscount && (
