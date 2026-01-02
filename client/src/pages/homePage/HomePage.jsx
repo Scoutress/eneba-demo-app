@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import styles from "./HomePage.module.scss";
 import ItemsGrid from "../../components/itemsGrid/ItemsGrid.jsx";
@@ -33,7 +33,7 @@ const HomePage = () => {
         }
 
         const data = await res.json();
-        setItems(data);
+        setItems(Array.isArray(data) ? data : []);
       } catch (err) {
         if (err.name === "AbortError") return;
         console.error(err);
@@ -49,6 +49,39 @@ const HomePage = () => {
       controller.abort();
     };
   }, [searchValue]);
+
+  const regionPriority = (region) => {
+    switch (region) {
+      case "global":
+        return 0;
+      case "europe":
+        return 1;
+      default:
+        return 2;
+    }
+  };
+
+  const sortedItems = useMemo(() => {
+    return [...items].sort((a, b) => {
+      if (a.available !== b.available) {
+        return a.available ? -1 : 1;
+      }
+
+      if (a.regionOk !== b.regionOk) {
+        return a.regionOk ? -1 : 1;
+      }
+
+      const regionDiff =
+        regionPriority(a.regionLabel) - regionPriority(b.regionLabel);
+      if (regionDiff !== 0) return regionDiff;
+
+      if (a.hasDiscount !== b.hasDiscount) {
+        return a.hasDiscount ? -1 : 1;
+      }
+
+      return 0;
+    });
+  }, [items]);
 
   return (
     <div className={styles.page}>
@@ -70,7 +103,7 @@ const HomePage = () => {
           </div>
 
           <ItemsGrid>
-            {items.map((item) => (
+            {sortedItems.map((item) => (
               <ShopItemCard
                 key={item.id}
                 photo={
