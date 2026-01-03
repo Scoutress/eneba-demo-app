@@ -1,34 +1,35 @@
 .wrapper {
   position: fixed;
-  right: 8px;
-  bottom: 8px;
+  right: 0;
+  bottom: 0;
   z-index: 10;
 }
 
 .btn {
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: none;
+  padding: 8px 14px;
 
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.2px;
+  border-radius: 0;
+  border: 1px solid rgba(0, 0, 0, 0.18);
 
-  background: #ff4b4b;
-  color: #fff;
+  background: #ffffff;
+  color: #111111;
 
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
 
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  box-shadow: none;
+
+  cursor: pointer;
+
+  transition: background-color 120ms ease, transform 120ms ease;
 }
 
 .btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
-  background: #ff6262;
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.35);
 }
 
 .btn:active {
-  transform: translateY(0);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+  transform: translateY(1px);
 }

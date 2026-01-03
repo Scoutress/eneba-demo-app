@@ -11,6 +11,7 @@ export default function ReportBtn() {
         className={styles.btn}
         onClick={() => navigate("/report")}
         type="button"
+        aria-label="Report a problem"
       >
         Report a problem
       </button>
